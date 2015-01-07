@@ -69,22 +69,25 @@ RSpec.describe EmailAddressesController, :type => :controller do
 
   describe "POST create" do
     describe "with valid params" do
-      it "creates a new EmailAddress" do
-        expect {
+      let(:alice)  {Person.create(first_name: "Alice", last_name: "Wonderland") }
+      let(:valid_attributes) { {address: "alice@yahoo.com", person_id: alice.id } }
+
+        it "creates a new EmailAddress" do
+          expect {
+            post :create, {:email_address => valid_attributes}, valid_session
+          }.to change(EmailAddress, :count).by(1)
+        end
+
+        it "assigns a newly created email_address as @email_address" do
           post :create, {:email_address => valid_attributes}, valid_session
-        }.to change(EmailAddress, :count).by(1)
-      end
+          expect(assigns(:email_address)).to be_a(EmailAddress)
+          expect(assigns(:email_address)).to be_persisted
+        end
 
-      it "assigns a newly created email_address as @email_address" do
-        post :create, {:email_address => valid_attributes}, valid_session
-        expect(assigns(:email_address)).to be_a(EmailAddress)
-        expect(assigns(:email_address)).to be_persisted
-      end
-
-      it "redirects to the created email_address" do
-        post :create, {:email_address => valid_attributes}, valid_session
-        expect(response).to redirect_to(EmailAddress.last)
-      end
+        it "redirects to the created email_address" do
+          post :create, {:email_address => valid_attributes}, valid_session
+          expect(response).to redirect_to(alice)
+        end
     end
 
     describe "with invalid params" do
