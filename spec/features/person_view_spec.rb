@@ -77,7 +77,7 @@ describe 'the person view', type: :feature do
       end
     end
 
-    it 'has an email addres link' do
+    it 'has an email address link to new email adresses' do
       person.email_addresses.each do |email|
         expect(page).to have_link('new_email_address', href: new_email_address_path(person_id: person.id))
       end
@@ -89,6 +89,20 @@ describe 'the person view', type: :feature do
       page.click_button("Create Email address")
       expect(current_path).to eq(person_path(person))
       expect(page).to have_content('ShitWeAreHere@yahoo.com')
+    end
+
+    it 'has an email address link to edit emails' do
+      person.email_addresses.each do |email|
+        expect(page).to have_link('edit', href: edit_email_address_path(email))
+      end
+    end
+
+    it 'follows email edit workflow' do
+      first(:link, 'edit').click
+      page.fill_in('Address', with: 'Shitz@gmail.com')
+      page.click_button('Update Email address')
+      expect(current_path).to eq(person_path(person))
+      expect(page).to have_content('Shitz@gmail.com')
     end
   end
 end
