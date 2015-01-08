@@ -156,7 +156,7 @@ RSpec.describe PhoneNumbersController, :type => :controller do
   describe "DELETE destroy" do
       let(:bob) {Person.create(first_name: 'Bob', last_name: 'Jones')}
       let(:valid_attributes) { {number: '555-5678', person_id: bob.id}}
-      
+
     it "destroys the requested phone_number" do
       phone_number = PhoneNumber.create! valid_attributes
       expect {

@@ -98,11 +98,29 @@ describe 'the person view', type: :feature do
     end
 
     it 'follows email edit workflow' do
+      email = person.email_addresses.first
+      old_email = email.address
+
       first(:link, 'edit').click
       page.fill_in('Address', with: 'Shitz@gmail.com')
       page.click_button('Update Email address')
       expect(current_path).to eq(person_path(person))
       expect(page).to have_content('Shitz@gmail.com')
+      expect(page).to_not have_content(old_email)
+    end
+
+    it 'has an email address link to delete emails' do
+      person.email_addresses.each do |email|
+        expect(page).to have_link('delete', href: email_address_path(email))
+      end
+    end
+
+    it 'follows email delete workflow' do
+      email = person.email_addresses.first
+
+      first(:link, 'delete').click
+      expect(current_path).to eq(person_path(person))
+      expect(page).to_not have_content("Shitz@gmail.com")
     end
   end
 end
