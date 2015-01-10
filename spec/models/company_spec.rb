@@ -15,4 +15,8 @@ RSpec.describe Company, :type => :model do
   it 'has an array of phone numbers'do
     expect(company.phone_numbers).to eq([])
   end
+
+  it 'has an array of email addresses' do
+    expect(company.email_addresses).to eq([])
+  end
 end
