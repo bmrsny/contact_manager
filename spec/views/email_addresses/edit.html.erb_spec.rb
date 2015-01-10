@@ -4,7 +4,7 @@ RSpec.describe "email_addresses/edit", :type => :view do
   before(:each) do
     @email_address = assign(:email_address, EmailAddress.create!(
       :address => "MyString",
-      :person_id => 1
+      :email_to_id => 1
     ))
   end
 
@@ -15,7 +15,7 @@ RSpec.describe "email_addresses/edit", :type => :view do
 
       assert_select "input#email_address_address[name=?]", "email_address[address]"
 
-      assert_select "input#email_address_person_id[name=?]", "email_address[person_id]"
+      assert_select "input#email_address_email_to_id[name=?]", "email_address[email_to_id]"
     end
   end
 end

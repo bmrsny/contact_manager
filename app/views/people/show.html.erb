@@ -23,7 +23,7 @@
 
   <% end %>
 </ul>
-<%= link_to 'new_email_address', new_email_address_path(person_id: @person.id) %> |
-<%= link_to 'Add phone number', new_phone_number_path(person_id: @person.id) %> |
+<%= link_to 'new_email_address', new_email_address_path(email_to_id: @person.id, email_to_type: 'Person') %> |
+<%= link_to 'Add phone number', new_phone_number_path(contact_id: @person.id, contact_type: 'Person') %> |
 <%= link_to 'Edit', edit_person_path(@person) %> |
 <%= link_to 'Back', people_path %>
